@@ -1,86 +1,83 @@
 /*Anthony Acosta*/
 
+#include <math.h>
 #include <stdio.h>
-#define MAXLINE 1000
-#define SIZE 20
-/* maximum input line length */
-
+#define MAXLINE 1000 /* maximum input line length */
 int getline2(char line[], int maxline);
 void copy(char to[], char from[]);
-int contar (char *);
-void countLine(char l[]);
-main()
+int cuenta(char cadena[]);
+int cuenta_digitos(char cadena[]);
+/* print the longest input line */
+int main()
 {
-int len;
-int max;
-char line[MAXLINE];
-char longest[MAXLINE];
-/*char str[SIZE];*/
-max = 0;
-while ((len = getline2(line, MAXLINE)) > 0)
-if (len > max) {
-max = len;
-copy(longest, line);
-}
-if (max > 0)
-printf("%s", longest);
-scanf("%s",longest);
-contar(longest);
-countLine(longest);
+    int n, opcion;
+    int len; /* current line length */
+    int max; /* maximum length seen so far */
+    char line[MAXLINE]; /* current input line */
+    char longest[MAXLINE]; /* longest line saved here */
+    max = 0;
+	printf("Por favor ingresa una o varias cadenas de caracteres seguidas del enter: \n");
+    while ((len = getline2(line, MAXLINE)) > 0)
+        if (len > max) {
+            max = len;
+            copy(longest, line);
+        }
+	if (max > 0) /* there was a line */
+        printf("La cadena mas larga es: %s", longest);
+
+	do
+{
+	printf( "\n   1. Contar los caracteres de la cadena mas larga" );
+        printf( "\n   2. Contar los digitos de la cadena" );
+        printf( "\n   3. Salir." );
+
+	printf( "\n\n   Introduzca opcion (1-3): ");
+	scanf( "%d", &opcion);
+
+	/*Se supone que aqui debo poner los swiches xD*/
+	switch(opcion)
+	{
+	case 1: if (max > 0) /* there was a line */
+                printf("La cadena tiene %d caracteres\n", cuenta(longest)-1);
+		break;
+	case 2:if (max > 0) /* there was a line */
+        	printf("La cadena tiene %d dígitos\n", cuenta_digitos(longest));
+		break;	
+	}
+	
+	/*Termina mi menu*/
+} while (opcion !=3);
 return 0;
 }
 
-
-/* getline2: read a line into s, return length*/
+/* getline2: read a line into s, return length */
 int getline2(char s[],int lim)
 {
-int c, i;
-for (i=0; i < lim-1 && (c=getchar())!=EOF && c!='\n'; ++i)
-s[i] = c;
-if (c == '\n') {
-s[i] = c;
-++i;
-}
-s[i] = '\0';
-return i;
+    int c, i;
+    for (i=0; i < lim-1 && (c=getchar())!=EOF && c!='\n'; ++i)
+        s[i] = c;
+    if (c == '\n') {
+        s[i] = c;
+        ++i;
+    }
+    s[i] = '\0';
+    return i;
 }
 
 /* copy: copy 'from' into 'to'; assume to is big enough */
 void copy(char to[], char from[])
 {
-int i;
-i = 0;
-while ((to[i] = from[i]) != '\0')
-++i;
+    int i;
+    i = 0;
+    while ((to[i] = from[i]) != '\0')
+        ++i;
 }
 
-/*Contar lineas*/
-int contar(char *str){
-int letras, digitos,i;
-letras=digitos=0;
-for(i=0; i<20; i++){
-	char c=str[i];
-if(c<=57 && c >=48) digitos++;
-if(c<=90 && c >=65) letras++;
-if(c<=122 && c >=97) letras++;
-if(c==0) break;
-}
-printf("digitos:%d \t letras:%d \n", digitos, letras);
-}
-
-
-/*Contar lineas*/
-void countLine(char s[]){
-int c, nl,cnt;
-cnt=0;
-nl=0;
-while ((c = getchar()) != EOF && cnt==sizeof(s))
-if (c == '\n')
-++nl;
-++cnt;
-printf("La cantidad de lineas es: ");
-printf("%d\n", nl);
-}
+/* cuenta: cuenta los caracteres de la cadena seleccionada */
+int cuenta(char cadena[])
+{
+    int i;
+    i = 0;
     while (cadena[i] != '\0')
         ++i;
     return i;
